@@ -13,14 +13,14 @@
     reallocate(pointer, sizeof(type) * oldCount, 0)
 
 void* reallocate(void* pointer, size_t oldSize, size_t newSize) {
-    if(newSize == 0) {
+    if (newSize == 0) {
         free(pointer);
         pointer = NULL;
         return pointer;
     }
 
     void* temp = realloc(pointer, newSize);
-    if(temp == NULL) {
+    if (temp == NULL) {
         pointer = NULL;
         exit(1);
     }
