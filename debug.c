@@ -33,6 +33,12 @@ int disassembleInstruction(Chunk* chunk, int offset) {
     // to indicate its position in the chunk
     printf("%04d ", offset);
 
+    if(offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1]) {
+        printf("   | ");
+    } else {
+        printf("%4d ", chunk->lines[offset]);
+    }
+
 
     uint8_t opcode = chunk->code[offset];
     switch (opcode) {

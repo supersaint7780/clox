@@ -46,11 +46,12 @@ typedef struct {
     int count;
     int capacity;
     uint8_t* code; // bytecode array
+    int* lines; // stores position of each byte in the code
     ValueArray constants;
 } Chunk;
 
 void initChunk(Chunk* chunk);
-void writeChunk(Chunk* chunk, uint8_t byte);
+void writeChunk(Chunk* chunk, uint8_t byte, int line);
 void freeChunk(Chunk* chunk);
 int addConstant(Chunk* chunk, Value value);
 
