@@ -4,11 +4,27 @@
 #include "common.h"
 #include "value.h"
 
+
 /*
+* INSTRUCTION FORMAT:
 * Each instruction will contain a one-byte operation code (opcode)
 * It indicates the type of instruction e.g add, subtract.
+* instruction may contain operands after opcode called
+* bytecode instruction operands. Low level notation that
+* modify how the bytecode instruction behaves
+* 
+* The opcode determines the number of operand bytes it has
+* and their meadning.
+* Example: a simple instruction like "return" may have no operands
+* whereas instructins like "load variable" need an operand to know
+* which variable to load
 */
 typedef enum {
+    // Opcode to load a constant. It takes a single byte operand
+    // which specifies which constant to load from the chunk's 
+    // constant array
+    OP_CONSTANT, 
+
     OP_RETURN, // Return from the current function
 } OpCode;
 
@@ -17,8 +33,8 @@ typedef enum {
 * right after the code. These are called immediate instructions.
 * For variable sized constants like string this does not work.
 * They are stored in a separate "constant data" region. The 
-* instruction to load the constant has an address/offset pointing
-* to where the value is stored in that section.
+* instruction to load the constant has an (operand) address/offset
+* pointing to where the value is stored in that section.
 *
 * For immediate instructions we also need to deal with alignment
 * padding and endianees. So instead for simplicty we put all
