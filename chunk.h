@@ -24,6 +24,8 @@ typedef enum {
     // which specifies which constant to load from the chunk's 
     // constant array
     OP_CONSTANT, 
+    // similar to OP_CONSTANT but takes 3 byte operand
+    OP_CONSTANT_LONG,
 
     OP_RETURN, // Return from the current function
 } OpCode;
@@ -55,6 +57,7 @@ void writeChunk(Chunk* chunk, uint8_t byte, size_t line);
 void freeChunk(Chunk* chunk);
 size_t addConstant(Chunk* chunk, Value value);
 size_t getLineNumber(Chunk* chunk, size_t index);
+void writeConstant(Chunk* chunk, Value value, size_t line);
 
 
 #endif

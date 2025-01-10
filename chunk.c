@@ -12,7 +12,7 @@ void initChunk(Chunk* chunk) {
 }
 
 void writeChunk(Chunk* chunk, uint8_t byte, size_t line) {
-    if (chunk->count <= chunk->capacity) {
+    if (chunk->count >= chunk->capacity) {
         size_t oldCapacity = chunk->capacity;
         chunk->capacity = GROW_CAPACITY(chunk->capacity);
         chunk->code = GROW_ARRAY(uint8_t, chunk->code, oldCapacity, chunk->capacity);
@@ -45,4 +45,19 @@ size_t getLineNumber(Chunk* chunk, size_t index) {
         }
     }
     return SIZE_MAX;
+}
+
+void writeConstant(Chunk* chunk, Value value, size_t line) {
+    size_t constantIndex = addConstant(chunk, value);
+    if(constantIndex < 256) {
+        writeChunk(chunk, OP_CONSTANT, line);
+        writeChunk(chunk, (uint8_t)constantIndex, line);
+    } else {
+        writeChunk(chunk, OP_CONSTANT_LONG, line);
+
+        // writing the index as 24 bit number(big endian)
+        writeChunk(chunk, (uint8_t)((constantIndex >> 16) & 0xff), line); // most significant byte
+        writeChunk(chunk, (uint8_t)((constantIndex >> 8) & 0xff), line); // middle byte
+        writeChunk(chunk, (uint8_t)(constantIndex & 0xff), line); // least significant byte
+    }
 }

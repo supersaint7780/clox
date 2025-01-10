@@ -12,7 +12,7 @@ void* reallocate(void* pointer, size_t oldSize, size_t newSize) {
     void* temp = realloc(pointer, newSize);
     if (temp == NULL) {
         pointer = NULL;
-        exit(1);
+        exit(15);
     }
     pointer = temp;
     return pointer;

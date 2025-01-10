@@ -7,7 +7,7 @@ void initLineArray(LineArray* array) {
     array->entries = NULL;
 }
 void writeLineArray(LineArray* array, size_t line) {
-    if(array->capacity <= array->count) {
+    if(array->count >= array->capacity) {
         size_t oldCapacity = array->capacity;
         array->capacity = GROW_CAPACITY(array->capacity);
         array->entries = GROW_ARRAY(LineEntry, array->entries, oldCapacity, array->capacity);
