@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "value.h"
-
+#include "line.h"
 
 /*
 * INSTRUCTION FORMAT:
@@ -43,17 +43,18 @@ typedef enum {
 */
 
 typedef struct {
-    int count;
-    int capacity;
+    size_t count;
+    size_t capacity;
     uint8_t* code; // bytecode array
-    int* lines; // stores position of each byte in the code
-    ValueArray constants;
+    LineArray lines; // stores position of each byte in the code
+    ValueArray constants; // constant pool
 } Chunk;
 
 void initChunk(Chunk* chunk);
-void writeChunk(Chunk* chunk, uint8_t byte, int line);
+void writeChunk(Chunk* chunk, uint8_t byte, size_t line);
 void freeChunk(Chunk* chunk);
-int addConstant(Chunk* chunk, Value value);
+size_t addConstant(Chunk* chunk, Value value);
+size_t getLineNumber(Chunk* chunk, size_t index);
 
 
 #endif

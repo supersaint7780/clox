@@ -7,8 +7,8 @@ typedef double Value;
 
 // constant pool
 typedef struct {
-    int capacity;
-    int count;
+    size_t capacity;
+    size_t count;
     Value* values;
 } ValueArray;
 
