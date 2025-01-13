@@ -1,38 +1,40 @@
-# Compiler and flags
+# compiler and flags
+# -I specifies the path for the header files
 CC = gcc
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Werror -Iinclude
 
-# Automatically detect all source and object files
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.o)
+# automatically detect all source and object files
+SRC = $(wildcard src/*.c)
+OBJ = $(SRC:src/%.c=build/%.o)
 
-# Ouput Binary
-TARGET = lox
-
-# Default target
-all = $(TARGET)
+# output binary
+TARGET = build/lox
 
 # Rule syntax
 # target: dependecy
 # <tab> command
 
-# Build target
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
-	rm -f $(OBJS)
+# default target
+all: $(TARGET)
 
 # Pattern rule to compile .c file to .o files
 # $@ refers to current target
 # $< refers to first dependecy
-%.o: %.c
+# $^ refers to all dependencies
+build/%.o: src/%.c
+	mkdir -p build
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Run the program
+# build target
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $@
+
+# run the compiler
 run: $(TARGET)
 	./$(TARGET)
 
-# Clean up the generated files
+# clean up the generated files
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf build
 
 .PHONY: all clean run
