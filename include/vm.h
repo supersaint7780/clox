@@ -4,7 +4,7 @@
 #include "chunk.h"
 #include "value.h"
 
-#define STACK_MAX 256
+#define INITIAL_STACK_SIZE 256
 
 typedef struct {
     // chunk being executed
@@ -14,8 +14,8 @@ typedef struct {
     // that is about to be executed
     // ip: instruction pointer
     uint8_t* ip; 
-
-    Value stack[STACK_MAX];
+    size_t stackCapacity;
+    Value* stack;
     Value* stackTop;
 } VM;
 

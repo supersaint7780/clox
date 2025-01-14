@@ -14,19 +14,38 @@
 * modify how the bytecode instruction behaves
 * 
 * The opcode determines the number of operand bytes it has
-* and their meadning.
+* and their meaning.
 * Example: a simple instruction like "return" may have no operands
 * whereas instructins like "load variable" need an operand to know
 * which variable to load
 */
+
+/*
+* Operands indicate the number of bytes following the bytecode
+* required by the opcode. It does not indicate the operands
+* used by actual operator
+*/
 typedef enum {
+    // Operands: 1
     // Opcode to load a constant. It takes a single byte operand
     // which specifies which constant to load from the chunk's 
     // constant array
     OP_CONSTANT, 
-    // similar to OP_CONSTANT but takes 3 byte operand
+    // Operands: 3
+    // 3 operands combined denote the address of the constant in
+    // constant pool
     OP_CONSTANT_LONG,
 
+    // Operands: 0
+    OP_NEGATE,
+
+    // Operands: 0
+    OP_ADD,
+    OP_SUBTRACT,
+    OP_MULTIPLY,
+    OP_DIVIDE,
+
+    // Operands: 0
     OP_RETURN, // Return from the current function
 } OpCode;
 
