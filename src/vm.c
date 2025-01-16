@@ -3,6 +3,7 @@
 
 #include "vm.h"
 #include "debug.h"
+#include "compiler.h"
 #include "memory.h"
 
 VM vm;
@@ -120,5 +121,6 @@ static InterpretResult run() {
 }
 
 InterpretResult interpret(const char* source) {
+    compile(source);
     return INTERPRET_OK;
 }
