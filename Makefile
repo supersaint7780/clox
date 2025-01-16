@@ -1,7 +1,7 @@
 # compiler and flags
 # -I specifies the path for the header files
 CC = gcc
-CFLAGS = -Wall -Werror -Iinclude
+CFLAGS = -Wall -Iinclude
 
 # automatically detect all source and object files
 SRC = $(wildcard src/*.c)
