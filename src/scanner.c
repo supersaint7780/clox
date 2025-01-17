@@ -137,7 +137,7 @@ static Token number() {
 
 static TokenType checkKeyword(int start, int restLength, const char* rest, TokenType type) {
     if (scanner.current - scanner.start == start + restLength
-        && memcmp(scanner.start + start, rest, restLength)) {
+        && memcmp(scanner.start + start, rest, restLength) == 0) {
         return type;
     }
     return TOKEN_IDENTIFIER;
